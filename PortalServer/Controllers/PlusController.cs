@@ -12,10 +12,22 @@ namespace PortalServer.Controllers
 {
     public class PlusController : PassAuthenticatedController
     {
-        public ActionResult Login(string code)
+        public ActionResult Login(string code, string redirectUrl)
         {
             PlusLogin(code);
-            return Json(new { yourcode = code });
+            if (ValidPass == null)
+            {
+                // Login failed?
+                return Json(new { yourcode = code, gamePassString = "" });
+            }
+            // Login succeeded. Generates a GamePass and return;
+            var pass = new GamePass();
+            pass.data.userId = ValidPass.data.userId;
+            pass.data.redirectUrl = redirectUrl;
+            pass.data.expires = DateTime.UtcNow.AddHours(1);
+            var privateKey = ConfigurationManager.AppSettings["PrivateKeyXmlString"];
+            pass.SignThis(privateKey);
+            return Json(new { yourcode = code, gamePassString = pass.ToBase64EncodedJson() });
         }
 
         // DEBUG

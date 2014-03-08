@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortalServer;
 using PortalServer.Controllers;
+using AuthUtility;
+using System.Configuration;
 
 namespace PortalServer.Tests.Controllers
 {

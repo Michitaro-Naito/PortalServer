@@ -37,7 +37,6 @@ namespace PortalServer.Controllers
                 passString = passCookie.Value;
                 try
                 {
-                    //pass = JsonConvert.DeserializeObject<Pass>(passString);
                     pass = JsonConvert.DeserializeObject<Pass>(AuthHelper.Decrypt(passString));
                 }
                 catch
@@ -113,22 +112,9 @@ namespace PortalServer.Controllers
 
             // Generates Pass from AuthObject and stores it to Cookie.
             // (It describes User is who.)
-            var pass = Pass.GenerateFromAuthObject(authObject);
+            string hashSecret = ConfigurationManager.AppSettings["SecuritySalt"];
+            var pass = Pass.GenerateFromAuthObject(hashSecret, authObject);
             var json = JsonConvert.SerializeObject(pass);
-
-            /*var key = Convert.FromBase64String("RYtoTxHdu9Er4F9oFdK3m7k8tpu9hitAxWPU9iFRubg=");
-            var iv = Convert.FromBase64String("orfxwbQx7HoHja4SDWo9UA==");
-            Debug.WriteLine(string.Format("Key:{0} IV:{1}", Convert.ToBase64String(key), Convert.ToBase64String(iv)));*/
-            /*Debug.WriteLine("JSON: " + json);
-            var encrypted = AuthHelper.Encrypt(json);
-            Debug.WriteLine("Encrypted: " + encrypted);
-            var decrypted = AuthHelper.Decrypt(encrypted);
-            Debug.WriteLine("Decrypted: " + decrypted);
-            if (decrypted == json)
-                Debug.WriteLine("The same");*/
-
-
-            //Response.Cookies.Set(new HttpCookie(PassCookieName, json));
             Response.Cookies.Set(new HttpCookie(PassCookieName, AuthHelper.Encrypt(json)));
         }
     }

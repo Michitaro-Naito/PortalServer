@@ -10,6 +10,15 @@ namespace PortalServer.Controllers
     {
         public ActionResult Index()
         {
+            /*string privateKeyXmlString;
+            string publicKeyXmlString;
+            using (var rsa = new System.Security.Cryptography.RSACryptoServiceProvider())
+            {
+                privateKeyXmlString = rsa.ToXmlString(true);
+                publicKeyXmlString = rsa.ToXmlString(false);
+                System.Diagnostics.Debug.WriteLine(privateKeyXmlString);
+                System.Diagnostics.Debug.WriteLine(publicKeyXmlString);
+            }*/
             return View();
         }
 
