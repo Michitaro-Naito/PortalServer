@@ -1,0 +1,118 @@
+﻿ <!-- BEGIN Pre-requisites -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript">
+    function signInCallback(authResult) {
+        try {
+            //console.info(authResult);
+            if (authResult['code']) {
+
+                // Hide the sign-in button now that the user is authorized, for example:
+                $('#signinButton').attr('style', 'display: none');
+                // Send the code to the server
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    url: '@Url.Action("Login", "Plus")',
+                    dataType: 'JSON',
+                    data: {
+                        code: authResult['code']
+                    }
+                }).done(function (data) {
+                    console.info(data);
+                    //alert('succeeded!');
+                }).fail(function () {
+                    alert('failed');
+                });
+
+                gapi.client.load('plus', 'v1', function () {
+                    //alert('loaded');
+                });
+
+            } else if (authResult['error']) {
+                // There was an error.
+                // Possible error codes:
+                //   "access_denied" - User denied access to your app
+                //   "immediate_failed" - Could not automatially log in the user
+                // console.log('There was an error: ' + authResult['error']);
+                alert(authResult['error']);
+            }
+        } catch (e) {
+            alert(JSON.stringify(e));
+        }
+    }
+
+    (function () {
+        try{
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://plus.google.com/js/client:plusone.js?onload=start';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        } catch (e) {
+            alert(JSON.stringify(e));
+        }
+    })();
+</script>
+<!-- END Pre-requisites -->
+@Html.ActionLink("Play Game", "Play", "Game");
+
+<!-- Add where you want your sign-in button to render -->
+<div id="signinButton">
+    <span class="g-signin"
+          data-scope="https://www.googleapis.com/auth/plus.login email"
+          data-requestvisibleactions="http://schemas.google.com/AddActivity"
+          data-clientid="178783570341-7mqg702gbuj1cbsr9v2cejdj94q40q0u.apps.googleusercontent.com"
+          data-cookiepolicy="single_host_origin"
+          data-callback="signInCallback">
+    </span>
+</div>
+<div id="result"></div>
+
+Welcome!
+
+<button type="button" id="GetProfile">Get My Profile</button>
+<div id="profile"></div>
+<button type="button" id="RenderProfile">Render My Profile</button>
+
+<script>
+    (function () {
+        $('#GetProfile').click(function () {
+            //alert('Get');
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: '@Url.Action("GetProfile", "Plus")',
+                dataType: 'JSON',
+                data: {
+
+                }
+            }).done(function (data) {
+                console.info(data);
+            }).fail(function () {
+                alert('failed!');
+            });
+        });
+
+        $('#RenderProfile').click(function () {
+            console.info('Getting...');
+            var request = gapi.client.plus.people.get({ 'userId': 'me' });
+            request.execute(function (profile) {
+                $('#profile').empty();
+                if (profile.error) {
+                    $('#profile').append(profile.error);
+                    return;
+                }
+                $('#profile').append(
+                    $('<p><img src=\"' + profile.image.url + '\"></p>'));
+                $('#profile').append(
+                    $('<p>Hello ' + profile.displayName + '!<br />Tagline: ' +
+                    profile.tagline + '<br />About: ' + profile.aboutMe + '</p>'));
+                if (profile.cover && profile.coverPhoto) {
+                    $('#profile').append(
+                        $('<p><img src=\"' + profile.cover.coverPhoto.url + '\"></p>'));
+                }
+            });
+        });
+    })();
+</script>
