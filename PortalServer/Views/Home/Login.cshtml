@@ -1,8 +1,7 @@
 ﻿ <!-- BEGIN Pre-requisites -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript">
-    var redirectUrl = '@Request["redirectUrl"]'; //Url.Action("About", "Home", null, Request.Url.Scheme)';
-    redirectUrl += '?gamePassString=';
+    var redirectUrl = '@Request["redirectUrl"]';
 
     function signInCallback(authResult) {
         try {
@@ -26,7 +25,7 @@
                     //alert('succeeded!');
                     //location.href = redirectUrl;
                     console.info(JSON.parse(atob(data.gamePassString)));
-                    console.info(redirectUrl + data.gamePassString);
+                    console.info(redirectUrl + '?gamePassString=' + data.gamePassString);
                 }).fail(function () {
                     alert('failed');
                 });

@@ -11,17 +11,17 @@ namespace PortalServer.Tests
         [TestMethod]
         public void GamePassSignTest()
         {
-            var url = "http://amlitek.com/";
+            var uri = new Uri("http://amlitek.com/");
             var pass = new GamePass();
             pass.data.userId = "Foo";
-            pass.data.redirectUrl = url;
+            pass.data.authority = uri.Authority;
             pass.data.expires = DateTime.UtcNow.AddHours(1);
             var privateKey = ConfigurationManager.AppSettings["PrivateKeyXmlString"];
             Assert.IsNotNull(privateKey);
             var publicKey = ConfigurationManager.AppSettings["PublicKeyXmlString"];
             Assert.IsNotNull(publicKey);
             pass.SignThis(privateKey);
-            Assert.IsTrue(pass.IsValid(publicKey, url));
+            Assert.IsTrue(pass.IsValid(publicKey, uri.Authority));
         }
     }
 }

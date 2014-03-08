@@ -23,7 +23,8 @@ namespace PortalServer.Controllers
             // Login succeeded. Generates a GamePass and return;
             var pass = new GamePass();
             pass.data.userId = ValidPass.data.userId;
-            pass.data.redirectUrl = redirectUrl;
+            var uri = new Uri(redirectUrl);
+            pass.data.authority = uri.Authority;
             pass.data.expires = DateTime.UtcNow.AddHours(1);
             var privateKey = ConfigurationManager.AppSettings["PrivateKeyXmlString"];
             pass.SignThis(privateKey);
