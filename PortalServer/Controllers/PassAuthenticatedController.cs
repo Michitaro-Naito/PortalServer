@@ -116,6 +116,7 @@ namespace PortalServer.Controllers
             var pass = Pass.GenerateFromAuthObject(hashSecret, authObject);
             var json = JsonConvert.SerializeObject(pass);
             Response.Cookies.Set(new HttpCookie(PassCookieName, AuthHelper.Encrypt(json)));
+            GetPass();
         }
     }
 }

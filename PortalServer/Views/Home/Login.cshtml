@@ -26,6 +26,7 @@
                     //location.href = redirectUrl;
                     console.info(JSON.parse(atob(data.gamePassString)));
                     console.info(redirectUrl + '?gamePassString=' + data.gamePassString);
+                    location.href = redirectUrl + '?gamePassString=' + data.gamePassString;
                 }).fail(function () {
                     alert('failed');
                 });
