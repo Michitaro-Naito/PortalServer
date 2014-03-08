@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalServer", "PortalServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalServer.Tests", "PortalServer.Tests\PortalServer.Tests.csproj", "{8EA2956B-767F-442C-BEF5-5E1340E5324C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyResources", "MyResources\MyResources.csproj", "{A7728900-3029-4AD3-A144-ED7052643836}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8EA2956B-767F-442C-BEF5-5E1340E5324C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EA2956B-767F-442C-BEF5-5E1340E5324C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EA2956B-767F-442C-BEF5-5E1340E5324C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7728900-3029-4AD3-A144-ED7052643836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7728900-3029-4AD3-A144-ED7052643836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7728900-3029-4AD3-A144-ED7052643836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7728900-3029-4AD3-A144-ED7052643836}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
