@@ -9,10 +9,10 @@ namespace PortalServer.Tests
     public class AuthTest
     {
         [TestMethod]
-        public void GamePassSignTest()
+        public void EntryPassSignTest()
         {
             var uri = new Uri("http://amlitek.com/");
-            var pass = new GamePass();
+            var pass = new EntryPass();
             pass.data.userId = "Foo";
             pass.data.authority = uri.Authority;
             pass.data.expires = DateTime.UtcNow.AddHours(1);

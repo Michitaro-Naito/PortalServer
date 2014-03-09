@@ -18,17 +18,17 @@ namespace PortalServer.Controllers
             if (ValidPass == null)
             {
                 // Login failed?
-                return Json(new { yourcode = code, gamePassString = "" });
+                return Json(new { yourcode = code, entryPassString = "" });
             }
-            // Login succeeded. Generates a GamePass and return;
-            var pass = new GamePass();
+            // Login succeeded. Generates a EntryPass and return;
+            var pass = new EntryPass();
             pass.data.userId = ValidPass.data.userId;
             var uri = new Uri(redirectUrl);
             pass.data.authority = uri.Authority;
             pass.data.expires = DateTime.UtcNow.AddHours(1);
             var privateKey = ConfigurationManager.AppSettings["PrivateKeyXmlString"];
             pass.SignThis(privateKey);
-            return Json(new { yourcode = code, gamePassString = pass.ToBase64EncodedJson() });
+            return Json(new { yourcode = code, entryPassString = pass.ToBase64EncodedJson() });
         }
 
         // DEBUG
