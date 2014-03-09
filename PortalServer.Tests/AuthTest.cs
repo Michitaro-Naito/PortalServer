@@ -9,6 +9,21 @@ namespace PortalServer.Tests
     public class AuthTest
     {
         [TestMethod]
+        public void AES()
+        {
+            var key = ConfigurationManager.AppSettings["AesKey"];
+            Assert.IsNotNull(key);
+            var iv = ConfigurationManager.AppSettings["AesIv"];
+            Assert.IsNotNull(iv);
+            var original = "Hello, world!";
+
+            var cipher = AuthHelper.Encrypt(original, key, iv);
+            var decrypted = AuthHelper.Decrypt(cipher, key, iv);
+
+            Assert.AreEqual(original, decrypted);
+        }
+
+        [TestMethod]
         public void EntryPassSignTest()
         {
             var uri = new Uri("http://amlitek.com/");

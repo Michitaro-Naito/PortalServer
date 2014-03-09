@@ -37,7 +37,7 @@ namespace PortalServer.Controllers
                 passString = passCookie.Value;
                 try
                 {
-                    pass = JsonConvert.DeserializeObject<Pass>(AuthHelper.Decrypt(passString));
+                    pass = JsonConvert.DeserializeObject<Pass>(AuthHelper.Decrypt(passString, ConfigurationManager.AppSettings["AesKey"], ConfigurationManager.AppSettings["AesIv"]));
                 }
                 catch
                 {
@@ -115,7 +115,7 @@ namespace PortalServer.Controllers
             string hashSecret = ConfigurationManager.AppSettings["SecuritySalt"];
             var pass = Pass.GenerateFromAuthObject(hashSecret, authObject);
             var json = JsonConvert.SerializeObject(pass);
-            Response.Cookies.Set(new HttpCookie(PassCookieName, AuthHelper.Encrypt(json)));
+            Response.Cookies.Set(new HttpCookie(PassCookieName, AuthHelper.Encrypt(json, ConfigurationManager.AppSettings["AesKey"], ConfigurationManager.AppSettings["AesIv"])));
             GetPass();
         }
     }
